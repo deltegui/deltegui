@@ -12,6 +12,7 @@ I've been a GNU/Linux user for more than ten years, so I'm pretty confident with
 ![JavaScript](https://img.shields.io/badge/-JavaScript-%23F1E05A?style=for-the-badge&logo=JavaScript&logoColor=white&labelColor=101010)
 ![TypeScript](https://img.shields.io/badge/-TypeScript-%232F74C0?style=for-the-badge&logo=TypeScript&logoColor=white&labelColor=101010)
 ![NodeJS](https://img.shields.io/badge/-NodeJS-%23689F63?style=for-the-badge&logo=Node.JS&logoColor=white&labelColor=101010)
+![Jest](https://img.shields.io/badge/-Jest-%23BF3B14?style=for-the-badge&logo=Jest&logoColor=white&labelColor=101010)
 ![Vue](https://img.shields.io/badge/-Vue-%233EAF7C?style=for-the-badge&logo=Vue.JS&logoColor=white&labelColor=101010)
 <br/>
 ![MySQL](https://img.shields.io/badge/-MySQL-%234479A1?style=for-the-badge&logo=MySQL&logoColor=white&labelColor=101010)
