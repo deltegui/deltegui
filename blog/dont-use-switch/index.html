@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Language" content="en">
+    <meta name="color-scheme" content="light dark">
+
+    
+
+    <meta name="author" content="deltegui">
+    <meta name="description" content="Vale, puede que me haya pasado. Antes que te tires a por mí voy a matizar el título un poquito. No uses switch en un lenguaje orientado a objetos. Es importante esta matización porque las razones por las que no deberías usar switch sólo se pueden aplicar a lenguajes orientados a objetos. De hecho, en otros lenguajes que no son orientados a objetos (como C) es inevitable usar la sentencia switch.">
+    <meta name="keywords" content="blog,developer,web,compilers,data structures">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="No uses switch"/>
+<meta name="twitter:description" content="Vale, puede que me haya pasado. Antes que te tires a por mí voy a matizar el título un poquito. No uses switch en un lenguaje orientado a objetos. Es importante esta matización porque las razones por las que no deberías usar switch sólo se pueden aplicar a lenguajes orientados a objetos. De hecho, en otros lenguajes que no son orientados a objetos (como C) es inevitable usar la sentencia switch."/>
+
+    <meta property="og:title" content="No uses switch" />
+<meta property="og:description" content="Vale, puede que me haya pasado. Antes que te tires a por mí voy a matizar el título un poquito. No uses switch en un lenguaje orientado a objetos. Es importante esta matización porque las razones por las que no deberías usar switch sólo se pueden aplicar a lenguajes orientados a objetos. De hecho, en otros lenguajes que no son orientados a objetos (como C) es inevitable usar la sentencia switch." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://192.168.1.52/blog/dont-use-switch/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2021-07-09T16:44:32+02:00" />
+<meta property="article:modified_time" content="2021-07-09T16:44:32+02:00" />
+
+
+
+    <title>
+  No uses switch · deltegui
+</title>
+
+    
+      <link rel="canonical" href="http://192.168.1.52/blog/dont-use-switch/">
+    
+
+    <link rel="preload" href="/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.34dfa7b2f5cdeb0f5302b2628f4a7a4bfe88a2431e1397ee4ec605c56ab69701.css" integrity="sha256-NN&#43;nsvXN6w9TArJij0p6S/6IokMeE5fuTsYFxWq2lwE=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+      
+        
+        
+        <link rel="stylesheet" href="/css/coder-dark.min.aa883b9ce35a8ff4a2a5008619005175e842bb18a8a9f9cc2bbcf44dab2d91fa.css" integrity="sha256-qog7nONaj/SipQCGGQBRdehCuxioqfnMK7z0Tastkfo=" crossorigin="anonymous" media="screen" />
+      
+    
+
+    
+      <link rel="stylesheet" href="/css/fix.css" />
+    
+
+    
+
+    <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+    
+      <script defer src="https://twemoji.maxcdn.com/v/13.0.2/twemoji.min.js"
+        integrity="sha384-wyB/MspSJ/r2bT2kCj44qtsYRYlpzO2oAPhRj5myrWD63dt6qWv4x8AZe7Fl3K3b" crossorigin="anonymous"></script>
+    
+
+    <meta name="generator" content="Hugo 0.85.0" />
+  </head>
+
+  
+  
+    
+  
+  <body class="preload-transitions colorscheme-auto"
+        onload=" twemoji.parse(document.body); "
+  >
+    
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      deltegui
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/blog/">blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/proyectos/">proyectos</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container page">
+  <article>
+    <header>
+      <h1 class="title">
+        <a class="title-link" href="http://192.168.1.52/blog/dont-use-switch/">
+          No uses switch
+        </a>
+      </h1>
+    </header>
+
+    <p>Vale, puede que me haya pasado. Antes que te tires a por mí voy a matizar el título un poquito. No uses switch <em><strong>en un lenguaje orientado a objetos</strong></em>.
+Es importante esta matización porque las razones por las que no deberías usar switch sólo se pueden aplicar a lenguajes orientados a objetos. De hecho, en otros lenguajes que no son orientados a objetos (como C) es inevitable usar la sentencia switch.</p>
+<p>Aclarado esto vamos al meollo:</p>
+<p>¿Para qué usamos un switch? Normalmente, para tomar una decisión dependiendo de las alternativas. Esto suelen ser los tipos de un enumerado o los subtipos de una estructura o clase. Entonces, cada vez que queramos hacer algo con respecto a una variable del tipo del enum, montamos un switch con cada uno de los posibles valores del enum (o subtipo). De aquí en adelante mencionaré únicamente el enum, pero es aplicable a los subtipos que he mencionado.</p>
+<p>Y esto, recalco, se hace cada vez. Así que terminamos preguntando por los posibles valores del enum en distintas partes del código.</p>
+<p>Bien, y ahora ¿qué pasa si queremos añadir un nuevo valor al enum? Pues nos encontramos el primer antipatrón: <strong><a href="https://refactoring.guru/smells/shotgun-surgery">cirugía a escopetazos</a></strong>. Esto viene a ser que tenemos que ir <em>&ldquo;escaneando&rdquo;</em> todo el código buscando aquellos sitios donde tengas un switch preguntando por los posibles valores del enum y añadir la implementación para la nueva opción.</p>
+<p>Pero no es el único problema. Añadir un nuevo <em><strong>case</strong></em> a los switch supone modificar código ya escrito, con el riesgo de introducir problemas a un código que ya funciona. De esto es justo lo que nos advierte el principio open-closed, la <strong>&ldquo;O&rdquo;</strong> de <strong>SOLID</strong>: Un módulo de software debe estar abierto a la extensión pero cerrado a la modificación. Así que también violamos este principio.</p>
+<p>En vez de usar switch podemos aplicar el refactor <em><strong>&ldquo;Replace conditional with Polymorphism&rdquo; [Refactoring, Martin Fowler]</strong></em>. En general, se trata de reemplazar el switch (o un if-else equivalente) por una jerarquía de clases y, usando polimorfismo, pasar la implementación de cada <em>case</em> a un método en cada una de las subclases (una por <em>case</em>).</p>
+<p>¿Esto significa que no debes usar nunca un switch? <strong>No</strong>, pero su uso debería de estar justificado. En un lenguaje orientado a objetos debería ser <em>extraño</em> su uso.</p>
+
+  </article>
+</section>
+
+  
+
+      </div>
+
+      
+  <footer class="footer">
+    <section class="container">
+      
+      
+        ©
+        
+          2019 -
+        
+        2021
+         deltegui 
+      
+      
+         · 
+        Powered by <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/">Coder</a>.
+      
+      
+    </section>
+  </footer>
+
+
+    </main>
+
+    
+      
+      <script src="/js/coder.min.03b17769f4f91ae35667e1f2a1ca8c16f50562576cf90ff32b3179926914daa5.js" integrity="sha256-A7F3afT5GuNWZ&#43;HyocqMFvUFYlds&#43;Q/zKzF5kmkU2qU="></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+  </body>
+
+</html>

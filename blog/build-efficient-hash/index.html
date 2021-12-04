@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Language" content="en">
+    <meta name="color-scheme" content="light dark">
+
+    
+
+    <meta name="author" content="deltegui">
+    <meta name="description" content="Creo que la mayoría de los programadores saben qué son las hash tables (también conocidas como diccionarios o mapas). Normalmente, te suelen enseñar sólo una manera de implementarlas, pero hay muchas otras formas distintas. Durante el desarrollo de Quartz he tenido que implementar una hash table medianamente rápida y aquí quiero dejar todo lo que conozco sobre el tema, que no creo que sea mucho, pero quiero recopilarlo. La mayoría de esta información viene de distintas partes de internet, yo lo único que hago es unificarla aquí mismo.">
+    <meta name="keywords" content="blog,developer,web,compilers,data structures">
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Hash Tables"/>
+<meta name="twitter:description" content="Creo que la mayoría de los programadores saben qué son las hash tables (también conocidas como diccionarios o mapas). Normalmente, te suelen enseñar sólo una manera de implementarlas, pero hay muchas otras formas distintas. Durante el desarrollo de Quartz he tenido que implementar una hash table medianamente rápida y aquí quiero dejar todo lo que conozco sobre el tema, que no creo que sea mucho, pero quiero recopilarlo. La mayoría de esta información viene de distintas partes de internet, yo lo único que hago es unificarla aquí mismo."/>
+
+    <meta property="og:title" content="Hash Tables" />
+<meta property="og:description" content="Creo que la mayoría de los programadores saben qué son las hash tables (también conocidas como diccionarios o mapas). Normalmente, te suelen enseñar sólo una manera de implementarlas, pero hay muchas otras formas distintas. Durante el desarrollo de Quartz he tenido que implementar una hash table medianamente rápida y aquí quiero dejar todo lo que conozco sobre el tema, que no creo que sea mucho, pero quiero recopilarlo. La mayoría de esta información viene de distintas partes de internet, yo lo único que hago es unificarla aquí mismo." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://192.168.1.52/blog/build-efficient-hash/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2021-07-13T20:23:32+02:00" />
+<meta property="article:modified_time" content="2021-07-13T20:23:32+02:00" />
+
+
+
+    <title>
+  Hash Tables · deltegui
+</title>
+
+    
+      <link rel="canonical" href="http://192.168.1.52/blog/build-efficient-hash/">
+    
+
+    <link rel="preload" href="/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
+
+    
+      
+      
+      <link rel="stylesheet" href="/css/coder.min.34dfa7b2f5cdeb0f5302b2628f4a7a4bfe88a2431e1397ee4ec605c56ab69701.css" integrity="sha256-NN&#43;nsvXN6w9TArJij0p6S/6IokMeE5fuTsYFxWq2lwE=" crossorigin="anonymous" media="screen" />
+    
+
+    
+
+    
+      
+        
+        
+        <link rel="stylesheet" href="/css/coder-dark.min.aa883b9ce35a8ff4a2a5008619005175e842bb18a8a9f9cc2bbcf44dab2d91fa.css" integrity="sha256-qog7nONaj/SipQCGGQBRdehCuxioqfnMK7z0Tastkfo=" crossorigin="anonymous" media="screen" />
+      
+    
+
+    
+      <link rel="stylesheet" href="/css/fix.css" />
+    
+
+    
+
+    <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+    
+      <script defer src="https://twemoji.maxcdn.com/v/13.0.2/twemoji.min.js"
+        integrity="sha384-wyB/MspSJ/r2bT2kCj44qtsYRYlpzO2oAPhRj5myrWD63dt6qWv4x8AZe7Fl3K3b" crossorigin="anonymous"></script>
+    
+
+    <meta name="generator" content="Hugo 0.89.4" />
+  </head>
+
+  
+  
+    
+  
+  <body class="preload-transitions colorscheme-auto"
+        onload=" twemoji.parse(document.body); "
+  >
+    
+<div class="float-container">
+    <a id="dark-mode-toggle" class="colorscheme-toggle">
+        <i class="fa fa-adjust fa-fw" aria-hidden="true"></i>
+    </a>
+</div>
+
+
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">
+      deltegui
+    </a>
+    
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/blog/">blog</a>
+            </li>
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/proyectos/">proyectos</a>
+            </li>
+          
+        
+        
+      </ul>
+    
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container page">
+  <article>
+    <header>
+      <h1 class="title">
+        <a class="title-link" href="http://192.168.1.52/blog/build-efficient-hash/">
+          Hash Tables
+        </a>
+      </h1>
+    </header>
+
+    <p>Creo que la mayoría de los programadores saben qué son las hash tables (también conocidas como diccionarios o mapas). Normalmente, te suelen enseñar sólo una manera de implementarlas, pero hay muchas otras formas distintas. Durante el desarrollo de <a href="/proyectos/">Quartz</a> he tenido que implementar una hash table medianamente rápida y aquí quiero dejar todo lo que conozco sobre el tema, que no creo que sea mucho, pero quiero recopilarlo. La mayoría de esta información viene de distintas partes de internet, yo lo único que hago es unificarla aquí mismo.</p>
+<h4 id="qué-es-una-hash-table">
+  ¿Qué es una hash table?
+  <a class="heading-link" href="#qu%c3%a9-es-una-hash-table">
+    <i class="fa fa-link" aria-hidden="true"></i>
+  </a>
+</h4>
+<p>Pues el concepto es muy sencillo: es una estructura de datos que permite relacionar una clave con un valor. Por ejemplo, digamos que quiero guardar la edad de la gente. En concreto, quiero recordar que Martín tiene 29 años y que Noelia tiene 32. Entonces la hash table guardaría:</p>
+<table>
+<thead>
+<tr>
+<th>Clave</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Martín</td>
+<td>29</td>
+</tr>
+<tr>
+<td>Noelia</td>
+<td>32</td>
+</tr>
+</tbody>
+</table>
+<p>En una hash table debería poder hacerse estas dos operaciones esenciales:</p>
+<ul>
+<li>Inserción de una clave y un valor.</li>
+<li>Búsqueda por clave.</li>
+<li>Borrado por clave.</li>
+</ul>
+<p>Pero nos queda aún lo más importante de las hash tables, la razón por la que es una estructura de datos ampliamente utilizada y, por lo tanto, muy importante: el rendimiento. Aquí dejo las complejidades de las operaciones principales (con respecto a la cantidad de elementos guardados), además del espacio en memoria utilizado:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Caso peor</th>
+<th>Caso medio</th>
+<th>Caso Mejor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Espacio</td>
+<td>O(n)</td>
+<td>Θ(n)</td>
+<td>Ω(n)</td>
+</tr>
+<tr>
+<td>Búsqueda</td>
+<td>O(n)</td>
+<td>Θ(1)</td>
+<td>Ω(1)</td>
+</tr>
+<tr>
+<td>Inserción</td>
+<td>O(n)</td>
+<td>Θ(1)</td>
+<td>Ω(1)</td>
+</tr>
+<tr>
+<td>Borrado</td>
+<td>O(n)</td>
+<td>Θ(1)</td>
+<td>Ω(1)</td>
+</tr>
+</tbody>
+</table>
+<p>Lo <em>interesante</em> de esta estructura de datos es el caso normal para la búsqueda, inserción y borrado: su complejidad es constante. Eso significa que aunque tengas medio millón de datos guardados la complejidad será constante. Una aclaración importante es que normalmente no sólo basta con que la complejidad sea constante sino que también sea rápido. De nada vale que la complejidad sea constante si se tira un minuto buscando (tenga la cantidad de elementos que tenga).</p>
+<p>El caso peor se refiere cuando la estructura de datos se ha degradado tanto que tiene que recorrerse todos los elementos del hash table para hacer cualquier operación (hay una manera para hacer que el caso peor también sea de O(1), pero requiere conocer las claves de antemano). En este caso no supone ninguna mejora sobre otras estructuras de datos como una lista enlazada.</p>
+<p>Sabiendo qué es lo que hace vamos a ver cómo lo hace:</p>
+<h4 id="toy-hash-table">
+  Toy Hash Table
+  <a class="heading-link" href="#toy-hash-table">
+    <i class="fa fa-link" aria-hidden="true"></i>
+  </a>
+</h4>
+<p>Vamos a hacer una hash table de juguete para tener una idea de cómo funcionan. Por el momento vamos a obviar problemas que tienen las hash tables de verdad y vamos a quedarnos con la esencia. Lo que vamos a querer es asignar una letra del abecedario a un número.</p>
+<center><img src="/img/toy_hash_table.png" /></center>
+<p>De hecho, es tan sencillo que vamos a dar una implementación en C. Lo más fácil para hacerlo es declararnos un array con la cantidad de letras que tenemos (vamos a usar 27 porque no incluimos la ñ y todos son minúsculas):</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="">char</span> buckets[27];
+</code></pre></div><p>Llamamos <em>&ldquo;buckets&rdquo;</em> a cada sitio donde una clave deja su valor (es el término que se suele utilizar). En este caso, imagina que cada cubo tiene una etiqueta con la letra que le corresponde y dentro del cubo tenemos el número.</p>
+<p>Necesitaremos inicializar esa memoria a algo. La idea va a ser que si no has &ldquo;insertado&rdquo; la letra te devuelva -1:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="">void</span> init_buckets() {
+    memset(buckets, -1, <span style="font-weight:bold">sizeof</span>(<span style="">char</span>) * 27);
+}
+</code></pre></div><p>Ahora necesitamos &ldquo;mapear&rdquo; una letra a su posición. Esto lo podemos hacer fácilmente conociendo sus posiciones en la tabla ASCII. Nosotros solo vamos a usar letras minúsculas, así que usamos la letra &ldquo;a&rdquo; (posición 97) para la posición 0 del array.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="">int</span> map_key(<span style="">char</span> key) {
+    <span style="font-weight:bold">return</span> key - 97;
+}
+</code></pre></div><p>La inserción es muy fácil:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="">void</span> insert(<span style="">char</span> key, <span style="">int</span> value) {
+    <span style="">int</span> position = map_key(key);
+    buckets[position] = value;
+}
+</code></pre></div><p>Y la búsqueda es muy similar a la inserción:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="">int</span> find(<span style="">char</span> key) {
+    <span style="">int</span> position = map_key(key);
+    <span style="font-weight:bold">return</span> buckets[position];
+}
+</code></pre></div><p>Con esto ya podemos jugar con nuestra hash table (de juguete)</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="">int</span> main() {
+    init_buckets();
+    insert(<span style="font-style:italic">&#39;b&#39;</span>, 12);
+    insert(<span style="font-style:italic">&#39;z&#39;</span>, 23);
+    insert(<span style="font-style:italic">&#39;a&#39;</span>, 2);
+    printf(<span style="font-style:italic">&#34;B: %d</span><span style="font-weight:bold;font-style:italic">\n</span><span style="font-style:italic">&#34;</span>, find(<span style="font-style:italic">&#39;b&#39;</span>));
+    printf(<span style="font-style:italic">&#34;Z: %d</span><span style="font-weight:bold;font-style:italic">\n</span><span style="font-style:italic">&#34;</span>, find(<span style="font-style:italic">&#39;z&#39;</span>));
+    printf(<span style="font-style:italic">&#34;A: %d</span><span style="font-weight:bold;font-style:italic">\n</span><span style="font-style:italic">&#34;</span>, find(<span style="font-style:italic">&#39;a&#39;</span>));
+    printf(<span style="font-style:italic">&#34;H: %d</span><span style="font-weight:bold;font-style:italic">\n</span><span style="font-style:italic">&#34;</span>, find(<span style="font-style:italic">&#39;h&#39;</span>));
+}
+</code></pre></div><p>Esto devuelve al ejecutarlo:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">B: 12
+Z: 23
+A: 2
+H: -1
+</code></pre></div><p>La H no se insertó, por lo que no la encuentra y devuelve -1.</p>
+<h3 id="strings-y-hashes">
+  Strings y hashes
+  <a class="heading-link" href="#strings-y-hashes">
+    <i class="fa fa-link" aria-hidden="true"></i>
+  </a>
+</h3>
+<p>La verdad es que una hash table que solo permita caracteres como claves no nos vale de mucho. Vamos a intentar ahora usar cualquier string como clave. Para eso, tendremos que cambiar la función que mapea la clave con el <em>bucket</em> donde guarda su valor (lo que antes llamábamos como <em>int map_key(char key)</em>). Aquí entran las funciones <strong>hash</strong>. Una función hash lo que hace es devolvernos el &ldquo;resumen&rdquo; (un número entero) que identifica un cierto string. Mucha gente le ha dedicado mucho tiempo buscando los algoritmos más eficientes para implementar hashes, así que no tienes que preocuparte de implementar tú uno. Lo que sí deberías conocer es qué tipo de función hash deberías elegir para una hash table. Una hash table debería usar una función hash que:</p>
+<ul>
+<li>Sea rápida: Las claves se hashean todas al menos una vez, así que más nos vale que la función hash sea muy rápida. Esto deja fuera a todas las funciones hash criptográficas (md5, sha1, bcrypt y similares). Incluso la función hash criptográfica más rápida es demasiado lenta para una hash table.</li>
+<li>Minimice las colisiones.</li>
+</ul>
+<p>El segundo requisito habla de algo que aún no he comentado. Las funciones hash tienen lo que se llaman <em>&ldquo;colisiones&rdquo;</em>. Se dice que se tiene una <em>colisión</em> cuando dos strings distintos dan el mismo resumen. Como podrás imaginar, es un problema para una hash table porque tenemos que manejar que dos elementos con distinta clave mapeen al mismo bucket. La mayor parte del trabajo y de la complejidad de la hash table se va a ir solucionando este problema. Que una función hash minimice las colisiones significa que debe hashear a cualquier bucket independientemente de dónde ha hasheado cualquier otro elemento. A esto se llama <em>&quot;<strong>simple uniform hashing</strong>&quot;</em>. Esto quiere decir que nos gustaría que nuestra hash table tenga una <a href="https://en.wikipedia.org/wiki/Discrete_uniform_distribution">distribución uniforme</a> de <em>&ldquo;sacar&rdquo;</em> cualquier número.</p>
+<h3 id="solucionando-colisiones-open-addressing-vs-separate-chaining">
+  Solucionando colisiones: Open Addressing VS Separate Chaining
+  <a class="heading-link" href="#solucionando-colisiones-open-addressing-vs-separate-chaining">
+    <i class="fa fa-link" aria-hidden="true"></i>
+  </a>
+</h3>
+<p>Como he dicho, las funciones hash pueden tener colisiones, por lo que nuestras tablas de hashes también. Toda la investigación sobre cómo mejorar las hash tables se centran en esto. Bien, pues hay tres estrategias principales:</p>
+<p><strong>Direct Addressing</strong>: Antes de presentar <em>Open Addressing</em> y <em>Separate Chaining</em> creo que está bien decir que lo que hemos hecho en nuestra <em>&ldquo;Toy Hash Table&rdquo;</em> se llama <em>Driect Addressing</em>. Realmente no es una manera para solucionar colisiones, pero he decidido ponerlo aquí porque realmente es una alternativa a las otras dos. La parte negativa ya la hemos comentado, necesitas tener una tabla del tamaño de la cantidad de claves que esperas guardar. En nuestro caso fue pequeña (sólo 27), pero en casos con muchas claves puede no ser práctico e incluso imposible (en caso de que requiriese más memoria de la que dispones).</p>
+<p><strong>Separate Chaining</strong>: Es la forma más fácil, y por lo tanto, la que se suele usar para enseñar. Cada uno de los <em>buckets</em> de la hash table tiene una lista donde se guardan todos aquellos elementos que colisionen. Como los elementos guardan también su clave, lo que se hace para buscar es que se hashea la clave, se localiza la posición donde debería de estar el valor asociado y se recorre la lista comparando la clave de cada elemento con la clave del valor que queremos. La lista se puede implementar de muchas formas, algunas son estas:</p>
+<ul>
+<li><strong>Listas enlazadas</strong>: Son la opción más simple, pero tiene algunas desventajas. Por ejemplo, no es una estructura de datos <em>&ldquo;cache friendly&rdquo;</em>, por lo que será más lenta que otras opciones que sí aprovechan la memoria cache. Para solucionar parcialmente este problema, puedes poner el primer elemento en el mismo array, de tal forma que no sea necesario seguir un puntero a otra posición de memoria que puede provocar un fallo de página.</li>
+</ul>
+<center><img src="/img/separate_chaining_linked_list.png" height=500 /></center>
+<ul>
+<li><strong>Árbol binario de búsqueda autobalanceado</strong>: Puede mejorar mucho el caso peor de las operaciones de la hash table (de O(n) a O(log n)), pero es mucho más complejo que usar cualquiera de las otras dos opciones.</li>
+<li><strong>Vector (array dinámico)</strong>: Es una alternativa también simple y mucho más <em>&ldquo;cache friendly&rdquo;</em> que las listas enlazadas.</li>
+</ul>
+<p><strong>Open Addressing</strong>: Es más compleja que la anterior. Todos los elementos de la hashtable se guardan en un único array, por lo que garantiza que se dispone contiguo en memoria. Cuando tenemos una colisión, guardamos el elemento en la primera posición del array que este libre siguiendo <strong>un patrón de búsqueda</strong>. Cuando se quiere buscar un elemento, se hashea su clave y nos dirigimos a la posición del array resultado de esta operación. Si el elemento que está en esa posición no es el que buscamos, continuamos buscando siguiendo el mismo <strong>patrón de búsqueda</strong> que usamos en la inserción hasta que:</p>
+<ul>
+<li>Encuentras una posición vacía. Si es así, es que el elemento no está en la tabla.</li>
+<li>Encontramos el elemento.</li>
+</ul>
+<center><img src="/img/open_addressing.png" height=500></center>
+<p>Ese proceso de buscar siguiendo el <strong>patrón de búsqueda</strong> que he comentado se suele llamar <em>&ldquo;probing&rdquo;</em>. Hay muchas formas para implementarlo (hay muchas más de las que pongo aquí, pero estas me parecen las más usadas):</p>
+<ul>
+<li>
+<p><strong>Linear probing</strong>: Es la más simple y la más utilizada. El proceso de <em>probing</em> es lineal: al buscar, si el elemento actual no es el que busco, miro en el siguiente. Así hasta que o encuentras el elemento que quieres, o encuentras una posición vacía. Esta forma de hacer <em>probing</em> es <em>cache friendly</em> (aún más de lo que ya es open addressing). Esto es así porque si te traes una página de memoria a la caché, si vas leyendo uno a uno las posiciones del array (lo cual significa avanzar normalmente unos cuantos bytes cada vez) y si tu hash table no se ha degradado mucho, es muy probable que todo el proceso de búsqueda ocurra en esa misma página.</p>
+<p>El problema principal de este proceso es lo que se llama <em>clustering</em>. Como hemos dicho, en open addressing con linear probing se inserta en el bucket donde <em>&ldquo;caes&rdquo;</em> y si no vas buscando en los siguientes hasta encontrar un sitio libre. Eso significa que vas a ocupar sitios donde deberían de <em>&ldquo;caer&rdquo;</em> otras claves. Esas otras claves tendrán que dejar su valor en otro sitio libre que encuentren más adelante. Eso formaría un grupo de elementos juntos, lo que llaman un <em>&ldquo;cluster&rdquo;</em>. Los <em>clusters</em> no son deseables porque, en caso de que el elemento no este en el hash table, tocará recorrer todo el cluster hasta encontrar el primer espacio libre, al final de éste. También en un <em>cluster</em> aumentan las distancias que tienes que recorrer para elementos que sí que están en la hash table, degradando su rendimiento.</p>
+<p>Respecto a este último problema, hay una forma de mejorarlo: <strong>Robin Hood Hashing</strong>. Esto lo que trata es de reducir la media de las distancias (varianza) a la posición donde se espera encontrar a un elemento. Ahora todos los elementos guardan su distancia al punto donde se les espera encontrar (el sitio donde <em>caen</em> originalmente o, dicho de otra forma, donde hashea su clave). Al momento de insertar, se va comprobando la distancia que tiene el elemento a insertar con el elemento de la posición actual. Cuando el elemento a insertar tiene una distancia mayor (que se va incrementando a medida que se va buscando un sitio libre), se intercambia el elemento de la posición actual con el que se está insertando. De esta forma, todos los elementos van equiparando sus distancias.</p>
+</li>
+<li>
+<p><strong>Quadratic probing</strong>: El concepto es el mismo que linear probing, pero en vez de ir uno a uno, se suma un número al cuadrado al hash original de la clave. Ese número va aumentando cada vez. La sucesión es:</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">H + 1^2
+H + 2^2
+...
+H + K^2
+</code></pre></div><p>Siendo H el resultado de hashear la clave. También tiene problemas de clustering: Si dos elementos hashean al mismo número H, la secuencia será la misma.</p>
+<ul>
+<li><strong>Double hashing</strong>: Cuando tienes una colisión la siguiente posición del array se determina volviendo a hashear con otra función hash la clave. Evita el clustering, a cambio de tener un peor aprovechamiento de la memoria caché. Una versión refinada es Cuckoo Hashing.</li>
+</ul>
+<h3 id="tamaño">
+  Tamaño
+  <a class="heading-link" href="#tama%c3%b1o">
+    <i class="fa fa-link" aria-hidden="true"></i>
+  </a>
+</h3>
+<p>Hasta ahora no hemos hablado del tamaño de las hash tables. En nuestra toy hash table era fijo porque no tenía sentido que para 27 letras hiciésemos uno variable (y porque su cometido era introducirte a las hash tables). Puedes dar un tamaño fijo a las hash tables. Pero en ese caso te tienes que limitar a las del tipo <strong>Separate Chaining</strong>. Obviamente que puedas hacerlo no significa que debas hacerlo: fijar el tamaño hace que, si la cantidad de elementos que tiene que guardar la hash table es mayor que su tamaño, la hash table se degradará hasta tener una complejidad de búsqueda, inserción y borrado de O(n).</p>
+<p>Así que lo ideal es que la hash table vaya cambiando de tamaño a medida que se vayan añadiendo elementos. Bien ahora nos encontramos con dos preguntas:</p>
+<ul>
+<li>¿Cuándo deberías aumentar el tamaño?</li>
+<li>¿Cuál es el tamaño que debería elegir?</li>
+</ul>
+<p>Respecto a la primera pregunta lo que se hace es medir el factor de carga de la hash table y, cuando llegue a un límite, aumentar el tamaño. El <em>factor de carga</em> es un porcentaje que se calcula como:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">factor de carga = cantidad de elementos / tamaño del hash table
+</code></pre></div><p>El límite es muy importante. Dependiendo de qué método utilces para implementar tu hash table, no deberías dejar que pase de un cierto límite. En caso contrario tu hash table se va a degradar hasta el punto que sus operaciones tengan un coste lineal. Normalmente soluciones basadas en <em>Separate chaining</em> permiten un load factor del 100% sin sufrir una acusada degradación (de hecho, como en chaining guardamos los elementos que colisionan fuera del array de la hash table, el factor de carga máximo, que no recomendable, puede ser incluso mayor que un 100%). Por otro lado, las que se basen en <em>Open Addressing</em> es recomendable que no supere el 75%.</p>
+<p>Ahora viene un problema derivado de la segunda pregunta (<em>¿Cuál es el tamaño que debería elegir?</em>). Resulta que cuando quieres buscar el bucket que le pertenece a una clave lo que haces es calcular el módulo del hash de la clave con el tamaño actual del hash table. Si el tamaño cambia, también lo hará el resultado de ese cálculo, por lo que debes volver a reubicar todos los elementos de la tabla. Esta operación tiene una complejidad O(n), por lo que no es deseable repetirla muchas veces. Aquí uno podría pensar que se puede obtener una respuesta a la segunda pregunta, y es un punto intermedio entre no provocar redimensionar muchas veces la tabla y no consumir mucha memoria.</p>
+<h3 id="optimizaciones-respecto-al-tamaño">
+  Optimizaciones respecto al tamaño
+  <a class="heading-link" href="#optimizaciones-respecto-al-tama%c3%b1o">
+    <i class="fa fa-link" aria-hidden="true"></i>
+  </a>
+</h3>
+<p>Si intentas implementar una hash table tal como se ha dicho hasta ahora, será con toda seguridad lenta (o al menos no todo lo rápida que debería). Al ver que tiene problemas de rendimiento podrías coger un <em>profiler</em> y buscar el problema. Y verás que está probablemente en una línea: donde haces el módulo con el hash y el tamaño de la hash table. Resulta que la operación de módulo es <strong>muy ineficiente</strong>. Un procesador x86_64 de intel tarda entre 80 y 95 ciclos de cpu en ejecutar el módulo (<a href="https://software.intel.com/content/www/us/en/develop/download/intel-64-and-ia-32-architectures-optimization-reference-manual.html">Manual de intel</a>).</p>
+<p>Pero hay formas de remediarlo. Una de ellas supone usar potencias de dos como tamaño de la hash table. Gracias a esto podemos sustituir el módulo por un <em>AND</em> con una máscara. Simplemente calculamos la máscara como el tamaño del hash - 1. Luego, cada vez que quieras calcular el módulo, sólo tienes que hacer el <em>AND</em> entre la máscara y el hash. Acabamos de pasar de 80-95 ciclos para calcular el módulo a únicamente 1. Podemos ver un ejemplo para ver qué está ocurriendo:</p>
+<p>Tenemos un tamaño de 8 cuya representación en binario es 1000. Su máscara será entonces 0111. Tenemos por ejemplo que el hash es 53 (110101). Calculamos el AND entre 8 y 53 (110101 &amp; 000111) lo cual da 5 (0101).</p>
+<p>Con esto ya puedes tener una hash table razonablemente rápida. Aún quedan cosas por contar, como por ejemplo los <em>hash attacks</em>, pero este post es ya muy largo como para continuar.</p>
+<h3 id="bibliografía">
+  Bibliografía
+  <a class="heading-link" href="#bibliograf%c3%ada">
+    <i class="fa fa-link" aria-hidden="true"></i>
+  </a>
+</h3>
+<ul>
+<li><a href="https://www.amazon.es/gp/product/0990582930?pf_rd_r=9WXBEMMSHXZJEZSVPQXT&amp;pf_rd_p=c6fa5af0-ec7c-40de-8332-fd1421de4244&amp;pd_rd_r=9637fca4-7ca1-4ca2-837d-2136104c8e1f&amp;pd_rd_w=Yc8qL&amp;pd_rd_wg=j48XB&amp;ref_=pd_gw_unk"><strong>Crafting Interpreters</strong></a> La introducción esta basada en la que hace Robert Nystrom en este libro, además que implementa una hash table para su intérprete. Sin embargo, aquí va directo al grano, por lo que sólo explica lo esencial para implementar la hash table de Lox.</li>
+<li><a href="https://www.amazon.es/Introduction-Algorithms-Press-Thomas-Cormen/dp/0262033844/ref=sr_1_2?__mk_es_ES=%C3%85M%C3%85%C5%BD%C3%95%C3%91&amp;crid=3J0JGZ05K8VN9&amp;dchild=1&amp;keywords=introduction+to+algorithms&amp;qid=1627645860&amp;sprefix=introduction+to%2Caps%2C176&amp;sr=8-2"><strong>Introduction to algorithms (Third edition, pag 253)</strong></a> He simplificado muchas cosas (no incluyo, por ejemplo, las complejidades de cada uno de los métodos para lidiar con colisiones, ni tampoco explicaciones sobre por qué es así). Realmente el grueso del artículo es un resumen del capítulo 11 de este libro.</li>
+</ul>
+
+  </article>
+</section>
+
+  
+
+      </div>
+
+      
+  <footer class="footer">
+    <section class="container">
+      
+      
+        ©
+        
+          2019 -
+        
+        2021
+         deltegui 
+      
+      
+         · 
+        Powered by <a href="https://gohugo.io/">Hugo</a> & <a href="https://github.com/luizdepra/hugo-coder/">Coder</a>.
+      
+      
+    </section>
+  </footer>
+
+
+    </main>
+
+    
+      
+      <script src="/js/coder.min.03b17769f4f91ae35667e1f2a1ca8c16f50562576cf90ff32b3179926914daa5.js" integrity="sha256-A7F3afT5GuNWZ&#43;HyocqMFvUFYlds&#43;Q/zKzF5kmkU2qU="></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+  </body>
+
+</html>
