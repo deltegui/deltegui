@@ -2,27 +2,27 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Blogs on deltegui</title>
-    <link>https://deltegui.github.io/deltegui/blog/</link>
+    <link>https://deltegui.github.io/blog/</link>
     <description>Recent content in Blogs on deltegui</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Aug 2021 01:06:38 +0200</lastBuildDate><atom:link href="https://deltegui.github.io/deltegui/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 02 Aug 2021 01:06:38 +0200</lastBuildDate><atom:link href="https://deltegui.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Cómo crear imágenes de Docker para tu Raspberry PI desde tu PC</title>
-      <link>https://deltegui.github.io/deltegui/blog/how-to-create-docker-images-for-rpi/</link>
+      <link>https://deltegui.github.io/blog/how-to-create-docker-images-for-rpi/</link>
       <pubDate>Mon, 02 Aug 2021 01:06:38 +0200</pubDate>
       
-      <guid>https://deltegui.github.io/deltegui/blog/how-to-create-docker-images-for-rpi/</guid>
+      <guid>https://deltegui.github.io/blog/how-to-create-docker-images-for-rpi/</guid>
       <description>Ahora que dispongo de una raspberry pi que no es la 1 (por lo que tengo bastante más memoria que sólo 500mb), me he propuesto dockerizar todos los servicios que tengo. Para ello tienes que construir las imágenes desde tu pc, que tiene una arquitectura distinta a la de la raspberry pi, por lo que necesitas hacer cross compilation.
 Bien, lo que vas a necesitar será un Dockerfile que sepas que funcione y, obviamente, Docker.</description>
     </item>
     
     <item>
       <title>Hash Tables</title>
-      <link>https://deltegui.github.io/deltegui/blog/build-efficient-hash/</link>
+      <link>https://deltegui.github.io/blog/build-efficient-hash/</link>
       <pubDate>Tue, 13 Jul 2021 20:23:32 +0200</pubDate>
       
-      <guid>https://deltegui.github.io/deltegui/blog/build-efficient-hash/</guid>
+      <guid>https://deltegui.github.io/blog/build-efficient-hash/</guid>
       <description>Creo que la mayoría de los programadores saben qué son las hash tables (también conocidas como diccionarios o mapas). Normalmente, te suelen enseñar sólo una manera de implementarlas, pero hay muchas otras formas distintas. Durante el desarrollo de Quartz he tenido que implementar una hash table medianamente rápida y aquí quiero dejar todo lo que conozco sobre el tema, que no creo que sea mucho, pero quiero recopilarlo. La mayoría de esta información viene de distintas partes de internet, yo lo único que hago es unificarla aquí mismo.</description>
     </item>
     
