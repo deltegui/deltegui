@@ -2,23 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://192.168.1.52/blog/</loc>
+    <loc>https://deltegui.github.io/deltegui/blog/</loc>
     <lastmod>2021-08-02T01:06:38+02:00</lastmod>
   </url><url>
-    <loc>http://192.168.1.52/blog/how-to-create-docker-images-for-rpi/</loc>
+    <loc>https://deltegui.github.io/deltegui/blog/how-to-create-docker-images-for-rpi/</loc>
     <lastmod>2021-08-02T01:06:38+02:00</lastmod>
   </url><url>
-    <loc>http://192.168.1.52/</loc>
+    <loc>https://deltegui.github.io/deltegui/</loc>
     <lastmod>2021-08-02T01:06:38+02:00</lastmod>
   </url><url>
-    <loc>http://192.168.1.52/proyectos/</loc>
+    <loc>https://deltegui.github.io/deltegui/proyectos/</loc>
     <lastmod>2021-07-25T20:09:24+02:00</lastmod>
   </url><url>
-    <loc>http://192.168.1.52/blog/build-efficient-hash/</loc>
+    <loc>https://deltegui.github.io/deltegui/blog/build-efficient-hash/</loc>
     <lastmod>2021-07-13T20:23:32+02:00</lastmod>
   </url><url>
-    <loc>http://192.168.1.52/categories/</loc>
+    <loc>https://deltegui.github.io/deltegui/categories/</loc>
   </url><url>
-    <loc>http://192.168.1.52/tags/</loc>
+    <loc>https://deltegui.github.io/deltegui/tags/</loc>
   </url>
 </urlset>
