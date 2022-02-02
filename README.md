@@ -15,6 +15,7 @@ I've been a GNU/Linux user for more than ten years, so I'm pretty confident with
 ![Jest](https://img.shields.io/badge/-Jest-%23BF3B14?style=for-the-badge&logo=Jest&logoColor=white&labelColor=101010)
 ![Vue](https://img.shields.io/badge/-Vue-%233EAF7C?style=for-the-badge&logo=Vue.JS&logoColor=white&labelColor=101010)
 <br/>
+![MongoDB](https://img.shields.io/badge/-MongoDB-%234479A1?style=for-the-badge&logo=MongoDB&logoColor=green&labelColor=101010)
 ![MySQL](https://img.shields.io/badge/-MySQL-%234479A1?style=for-the-badge&logo=MySQL&logoColor=white&labelColor=101010)
 ![Docker](https://img.shields.io/badge/-Docker-%232391E6?style=for-the-badge&logo=Docker&logoColor=white&labelColor=101010)
 ![Linux](https://img.shields.io/badge/-Linux-%231F1F1F?style=for-the-badge&logo=Linux&logoColor=white&labelColor=101010)
