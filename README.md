@@ -22,5 +22,4 @@ I've been a GNU/Linux user for more than ten years, so I'm pretty confident with
 
 ### Stats
 
-![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=deltegui&show_icons=true&theme=radical)
 [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=deltegui&theme=radical&layout=compact)](https://github.com/anuraghazra/github-readme-stats)
