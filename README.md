@@ -1,5 +1,4 @@
-Hi! 👋👋👋 I'm Diego. I'm primarily a web developer (both frontend and backend), but also I'm interested in system programming (emulators, compilers, interpreters...) and mobile development. Trying to create good quality code is one of my motivations so I'm learning about things like clean architecture, clean code, refactoring, testing...
-I've been a GNU/Linux user for more than ten years, so I'm pretty confident with that OS.
+Hi! 👋👋👋 I'm Diego. I'm primarily a web developer (both frontend and backend), but also I'm interested in systems programming (emulators, compilers, interpreters ...) and mobile development. I try to create good quality code, so  I'm learning about clean architecture, clean code, refactoring, testing... I've been a GNU/Linux user for more than ten years, so I'm pretty confident with that OS. 
 
 ### Skills
 ![Go](https://img.shields.io/badge/-Go-%237FD5EA?style=for-the-badge&logo=Go&logoColor=white&labelColor=101010)
