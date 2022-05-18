@@ -20,6 +20,8 @@ Hi! 👋👋👋 I'm Diego. I'm primarily a web developer (both frontend and bac
 ![Linux](https://img.shields.io/badge/-Linux-%231F1F1F?style=for-the-badge&logo=Linux&logoColor=white&labelColor=101010)
 ![Git](https://img.shields.io/badge/-Git-%23E84E31?style=for-the-badge&logo=Git&logoColor=white&labelColor=101010)
 
+<!--
 ### Stats
 
 [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=deltegui&theme=radical&layout=compact)](https://github.com/anuraghazra/github-readme-stats)
+-->
