@@ -1,4 +1,4 @@
-Hi! I'm Diego. I'm a full-stack web developer with a strong interest in systems programming (emulators, compilers, interpreters). Recently, I've also started exploring embedded systems to deepen my understanding of software at the hardware level.
+Hi! I'm a full-stack web developer with a strong interest in systems programming (emulators, compilers, interpreters). Recently, I've also started exploring embedded systems to deepen my understanding of software at the hardware level.
 I focus on writing high-quality, maintainable code by applying clean architecture, refactoring, testing, and other best practices. I've been using GNU/Linux for over a decade, so I feel right at home in that environment.
 
 ### Skills
