@@ -15,8 +15,7 @@ I focus on writing high-quality, maintainable code by applying clean architectur
 ![Jest](https://img.shields.io/badge/-Jest-%23BF3B14?style=for-the-badge&logo=Jest&logoColor=white&labelColor=101010)
 ![Vue](https://img.shields.io/badge/-Vue-%233EAF7C?style=for-the-badge&logo=Vue.JS&logoColor=white&labelColor=101010)
 <br/>
-![MongoDB](https://img.shields.io/badge/-MongoDB-%234479A1?style=for-the-badge&logo=MongoDB&logoColor=green&labelColor=101010)
-![MySQL](https://img.shields.io/badge/-MySQL-%234479A1?style=for-the-badge&logo=MySQL&logoColor=white&labelColor=101010)
+![MySQL](https://img.shields.io/badge/-PostgreSQL-%234479A1?style=for-the-badge&logo=PostgreSQL&logoColor=white&labelColor=101010)
 ![Docker](https://img.shields.io/badge/-Docker-%232391E6?style=for-the-badge&logo=Docker&logoColor=white&labelColor=101010)
 ![Linux](https://img.shields.io/badge/-Linux-%231F1F1F?style=for-the-badge&logo=Linux&logoColor=white&labelColor=101010)
 ![Git](https://img.shields.io/badge/-Git-%23E84E31?style=for-the-badge&logo=Git&logoColor=white&labelColor=101010)
