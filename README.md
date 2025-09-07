@@ -4,10 +4,11 @@ I focus on writing high-quality, maintainable code by applying clean architectur
 ### Skills
 ![Go](https://img.shields.io/badge/-Go-%237FD5EA?style=for-the-badge&logo=Go&logoColor=white&labelColor=101010)
 <br/>
+![C](https://img.shields.io/badge/-C-%23555555?style=for-the-badge&logo=C&logoColor=white&labelColor=101010)
+![C++](https://img.shields.io/badge/-cplusplus-%23555555?style=for-the-badge&logo=cplusplus&logoColor=white&labelColor=101010)
+<br/>
 ![Java](https://img.shields.io/badge/-Java-%23B07219?style=for-the-badge&logo=Java&logoColor=white&labelColor=101010)
 ![Spring](https://img.shields.io/badge/-Spring-%236AAD3D?style=for-the-badge&logo=spring&logoColor=white&labelColor=101010)
-<br/>
-![C](https://img.shields.io/badge/-C-%23555555?style=for-the-badge&logo=C&logoColor=white&labelColor=101010)
 <br/>
 ![JavaScript](https://img.shields.io/badge/-JavaScript-%23F1E05A?style=for-the-badge&logo=JavaScript&logoColor=white&labelColor=101010)
 ![TypeScript](https://img.shields.io/badge/-TypeScript-%232F74C0?style=for-the-badge&logo=TypeScript&logoColor=white&labelColor=101010)
